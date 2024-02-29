@@ -1,8 +1,11 @@
-import {Router, Request, Response} from "express";
-import { Task } from "../interfaces/task";
+import { Router } from "express";
+import { newTask, listTask, taskId } from "../controllers/taskControllers";
 
 const router = Router();
-let tasks: Task[] = [];
+
+router.post("/new", newTask);
+router.get("/list", listTask);
+router.get("/list/:id", taskId);
 
 
 export default router;

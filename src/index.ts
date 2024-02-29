@@ -1,15 +1,13 @@
-import express, {Express, Request, Response} from "express";
+import express, { Express } from "express";
 import dotenv from "dotenv";
+import taskRoutes from "./routes/taskRoutes";
 
 dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.get("/", (req: Request, res: Response) => {
-  console.log("Hello, Typescript Express!");
-  res.send("Llevate este paquete para Mendoza!");
-});
+app.use("/api/task", taskRoutes);
 
 app.listen(port, () => {
   console.log(`[Server]: server running at http://localhost:${port}`);
