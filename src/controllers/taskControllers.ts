@@ -1,9 +1,16 @@
 import { Request, Response } from "express";
+import { validationResult } from "express-validator";
 import { Task } from "../interfaces/task";
 
 let tasks: Task[] = [];
 
 const newTask = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()});
+  }
+
   const task: Task = {
     id: tasks.length +1,
     title: req.body.title,
@@ -31,6 +38,12 @@ const taskId = async (req: Request, res: Response) => {
 };
 
 const updateTask = async (req: Request, res: Response) => {
+  const errors = validationResult(req);
+
+  if(!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()});
+  }
+
   const task = tasks.find((t) => t.id === parseInt(req.params.id));
 
   if(!task) {
